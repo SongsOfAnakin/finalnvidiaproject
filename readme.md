@@ -4,21 +4,28 @@ This project is a trash image classification system using NVIDIA Jetson Inferenc
 
 ## Overview
 
-The system can classify trash into 10 different categories, making it useful for people to organize trash into different catagories easier.
+The system can classify trash into 10 different categories, making it useful for people to organize trash into different places easier.
 
 ## The Algorithm
 
 ### Model Architecture
 
-[The model](https://drive.google.com/file/d/1rxGChiVVU55-F3HUiedWlTLn6W6AyduL/view?usp=sharing) uses a ResNet-18 architecture that has been retrained on [this trash dataset](https://www.kaggle.com/datasets/hasibalmuzdadid/shoe-vs-sandal-vs-boot-dataset-15k-images). For training, 4000 images were used for each category, 500 were used for validation, and 500 were used for testing.
+[The model](https://drive.google.com/file/d/1rxGChiVVU55-F3HUiedWlTLn6W6AyduL/view?usp=sharing) uses a ResNet-18 architecture that has been retrained on [this trash dataset](https://www.kaggle.com/datasets/sudipp/garbage-dataset-9-classes). For training, 80% of every class was used for training, 15% of every class was used for validation, and 5% was used for testing.
 
-### Footwear Categories
+### Trash Categories
 
-The model classifies footwear into the following 3 categories:
+The model classifies trash into 10 categories:
 
-1. Boot
-2. Sandal
-3. Shoe
+1. Trash
+2. Shoes
+3. Plastic
+4. Paper
+5. Metal
+6. Glass
+7. Clothes
+8. Cardboard
+9. Biological
+10. Battery
 
 ## Setup
 
@@ -38,11 +45,18 @@ sudo make install
 
 Organize images like this:
 ```
-jetson-inference/python/training/classification/data/footwear/
+jetson-inference/python/training/classification/content/drive/MyDrive/archive/garbage_classification
 ├── train/
-│   ├── boot/
-│   ├── sandal/
-│   ├── shoe/
+│   ├── trash/
+│   ├── shoes/
+│   ├── plastic/
+│   ├── paper/
+│   ├── metal/
+│   ├── glass/
+│   ├── clothes/
+│   ├── cardboard/
+│   ├── biological/
+│   ├── battery/
 ├── val/
 └── test/
 
@@ -51,17 +65,17 @@ jetson-inference/python/training/classification/data/footwear/
 ### 3. Training
 
 1. Enable more memory: `echo 1 | sudo tee /proc/sys/vm/overcommit_memory`
-2. Train the model (I used batch size of 4)
+2. Train the model 
   ```
   cd jetson-inference
   ./docker/run.sh
   cd python/training/classification
-  python3 train.py --model-dir=models/footwear data/footwear
+  python3 train.py --model-dir=models/trash_classification data/garbage_classification
   ```
 3. Export Model
   ```
   # Still in docker container:
-  python3 onnx_export.py --model-dir=models/footwear
+  python3 onnx_export.py --model-dir=models/trash_classification
   ```
 
 ## Using the Model
@@ -69,13 +83,13 @@ jetson-inference/python/training/classification/data/footwear/
 ### Set Variables
 ```
 cd jetson-inference/python/training/classification
-NET=models/footwear
-DATASET=data/footwear
+NET=models/trash_classification
+DATASET=data/garbage_classification
 ```
 
 ### Test on Image
 ```
-imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output_0 --labels=$DATASET/labels.txt $DATASET/test/boot/<image.jpg> result.jpg
+imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output_0 --labels=$DATASET/labels.txt $DATASET/test/battery/<image.jpg> result.jpg
 ```
 Replace <image.jpg> with your actual image.
 ### Live Camera
@@ -90,7 +104,7 @@ imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output
 
 ## Resources
 * [The Finished Model](https://drive.google.com/file/d/1rxGChiVVU55-F3HUiedWlTLn6W6AyduL/view?usp=sharing)
-* [Dataset](https://www.kaggle.com/datasets/hasibalmuzdadid/shoe-vs-sandal-vs-boot-dataset-15k-images)
+* [Dataset](https://www.kaggle.com/datasets/sudipp/garbage-dataset-9-classes)
 * [ImageNet Documentation](https://github.com/dusty-nv/jetson-inference/blob/master/docs/imagenet-console-2.md)
 * [Jetson Inference GitHub](https://github.com/dusty-nv/jetson-inference)
 * [Video Demonstration](https://youtu.be/iGFWuKGNE6Y)
