@@ -107,4 +107,4 @@ imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output
 * [Dataset](https://www.kaggle.com/datasets/sudipp/garbage-dataset-9-classes)
 * [ImageNet Documentation](https://github.com/dusty-nv/jetson-inference/blob/master/docs/imagenet-console-2.md)
 * [Jetson Inference GitHub](https://github.com/dusty-nv/jetson-inference)
-* [Video Demonstration](https://drive.google.com/file/d/1piXIZqJk3nWWVd5s1xyR8zBTt3hT7Xok/view?usp=drive_link)
+* [Video Demonstration](https://drive.google.com/file/d/11awnhadxlp6punGvkqY1aqFNmrTVrS0P/view?usp=drive_link)
