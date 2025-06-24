@@ -70,12 +70,12 @@ jetson-inference/python/training/classification/content/drive/MyDrive/archive/ga
   cd jetson-inference
   ./docker/run.sh
   cd python/training/classification
-  python3 train.py --model-dir=models/trash_classification data/garbage_classification
+  python3 train.py --model-dir=models/garbage_classification data/garbage_classification
   ```
 3. Export Model
   ```
   # Still in docker container:
-  python3 onnx_export.py --model-dir=models/trash_classification
+  python3 onnx_export.py --model-dir=models/garbage_classification
   ```
 
 ## Using the Model
@@ -83,7 +83,7 @@ jetson-inference/python/training/classification/content/drive/MyDrive/archive/ga
 ### Set Variables
 ```
 cd jetson-inference/python/training/classification
-NET=models/trash_classification
+NET=models/garbage_classification
 DATASET=data/garbage_classification
 ```
 
